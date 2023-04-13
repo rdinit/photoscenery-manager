@@ -79,7 +79,7 @@ function generate_codes(){
     }
     for (tile_n in detailed_tiles){
         tile = tiles[tile_n]
-        cmds.push("python creator.py --scenery_folder " + scenery_path + " --lat " + tile[2][0] + " --lon " + tile[2][1] + "--cols 2")
+        cmds.push("python creator.py --scenery_folder " + scenery_path + " --lat " + tile[2][0] + " --lon " + tile[2][1] + " --cols 2")
     }
     document.getElementById('output-text').value = cmds.join('\n')
     text = "python creator.py --scenery_folder " + scenery_path + " --lat " + lat + " --lon " + lon
