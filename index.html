@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="/style.css"/>
+    
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="overlay" class="overlay">
+      <div class="tooltip-text">One click for derfault resolution, two cilcks for 2x resolution</div>
+      <button class="close-btn" onclick="hide_overlay()">close</button>
+      <div class="input-tooltip">Your scenery folder:</div>
+      <input class="scenery-folder-input" id="scnery-folder" type="text" placeholder="/home/user/fg/sceneries/my_scenery">
+      <button class="to-clipboard-button" onclick="to_clipboard()">coppy to clipboard</button>
+      <textarea id="output-text" class="text-field"></textarea>
+      <button class="generate-btn" onclick="generate_codes()">generate</button>
+    </div>
+    <button class="open-overlay-btn" onclick="show_overlay();generate_codes()">
+      generate
+    </button>
+    <script src='script.js'></script>
+  </body>
+</html>
