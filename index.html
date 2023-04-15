@@ -1,27 +1,44 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="/photoscenery-manager/style.css"/>
-    
-  </head>
-  <body>
-    <div id="map"></div>
-    <div id="overlay" class="overlay">
-      <div class="tooltip-text">One click for default resolution, two clicks for 2x resolution</div>
-      <button class="close-btn" onclick="hide_overlay()">close</button>
-      <div class="input-tooltip">Your scenery folder:</div>
-      <input class="scenery-folder-input" id="scnery-folder" type="text" placeholder="/home/user/fg/sceneries/my_scenery">
-      <button class="to-clipboard-button" onclick="to_clipboard()">copy to clipboard</button>
-      <textarea id="output-text" class="text-field"></textarea>
-      <button class="generate-btn" onclick="generate_codes()">generate</button>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="/photoscenery-manager/style.css" />
+
+</head>
+
+<body>
+  <div id="map"></div>
+  <div class="legend-container">
+    <div class="legend">
+      <div class="legend-color" style="background-color: #ff7800;"></div>
+      <div class="legend-text">4096×2048</div>
     </div>
-    <button class="open-overlay-btn" onclick="show_overlay();generate_codes()">
-      generate
-    </button>
-    <script src='/photoscenery-manager/script.js'></script>
-  </body>
+    <div class="legend">
+      <div class="legend-color" style="background-color: #0f78ff;"></div>
+      <div class="legend-text">8192×4096</div>
+    </div>
+  </div>
+  </div>
+  <div id="overlay" class="overlay">
+    <div class="tooltip-text">Here you can generate code for <a
+        href="https://github.com/nathanielwarner/flightgear-photoscenery">nathanielwarner's
+        flightgear-photoscenery</a><br>One click for default resolution, two clicks for 2x resolution, 3 clicks to
+      clear.</div>
+    <button class="close-btn" onclick="hide_overlay()">close</button>
+    <div class="input-tooltip">Your scenery folder:</div>
+    <input class="scenery-folder-input" id="scnery-folder" type="text" placeholder="/home/user/fg/sceneries/my_scenery">
+    <button class="to-clipboard-button" onclick="to_clipboard()">copy to clipboard</button>
+    <textarea id="output-text" class="text-field"></textarea>
+    <button class="generate-btn" onclick="generate_codes()">generate</button>
+  </div>
+  <button class="open-overlay-btn" onclick="show_overlay();generate_codes()">
+    generate
+  </button>
+  <script src='/photoscenery-manager/script.js'></script>
+</body>
+
 </html>

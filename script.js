@@ -1,12 +1,12 @@
 tiles = []
 detailed_tiles = []
 show_overlay()
-var map = L.map('map').setView({lon: 0, lat: 0}, 2);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-      }).addTo(map);
-      L.control.scale().addTo(map);
+var map = L.map('map').setView({ lon: 0, lat: 0 }, 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+}).addTo(map);
+L.control.scale().addTo(map);
 
 function get_tile_width(lat) {
     // thanks for https://github.com/nathanielwarner/flightgear-photoscenery
@@ -45,39 +45,43 @@ function draw_tile(d_lat, d_lon) {
     sbounds = bounds.toString()
     if (!detailed_tiles.find(function (ele) { return [ele[0], ele[1]].toString() === sbounds; })) {
         if (!tiles.find(function (ele) { return [ele[0], ele[1]].toString() === sbounds; })) {
-            L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(map).on('mouseover', onHover);
-            tiles.push([bounds[0], bounds[1], [d_lat, d_lon]])
-            console.log(tiles, detailed_tiles)
+            tiles.push([bounds[0], bounds[1], [d_lat, d_lon], L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(map).on('mouseover', onHover)])
         } else {
-            L.rectangle(bounds, { color: "#0f78ff", weight: 1 }).addTo(map).on('mouseover', onHover);
-            detailed_tiles.push([bounds[0], bounds[1], [d_lat, d_lon]])
+            detailed_tiles.push([bounds[0], bounds[1], [d_lat, d_lon], L.rectangle(bounds, { color: "#0f78ff", weight: 1 }).addTo(map).on('mouseover', onHover)])
             tiles = remove_tile(tiles, bounds)
-            console.log(tiles, detailed_tiles)
         }
+    } else {
+        detailed_tiles = remove_tile(detailed_tiles, bounds)
     }
 }
 function remove_tile(arr, x) {
     return arr.filter(function (item) {
-        return !((item[0][0] == x[0][0]) & (item[0][1] == x[0][1]))
+        if ((item[0][0] == x[0][0]) & (item[0][1] == x[0][1])) {
+            map.removeLayer(item[3]);
+            console.log(item[3])
+            return false
+        } else {
+            return true
+        }
     })
 }
 function onHover(e) {
     //console.log(this);
 }
-function show_overlay(){
+function show_overlay() {
     document.getElementById('overlay').style.visibility = 'visible'
 }
-function hide_overlay(){
+function hide_overlay() {
     document.getElementById('overlay').style.visibility = 'collapse'
 }
-function generate_codes(){
+function generate_codes() {
     scenery_path = document.getElementById('scnery-folder').value
     cmds = []
-    for (tile_n in tiles){
+    for (tile_n in tiles) {
         tile = tiles[tile_n]
         cmds.push("python creator.py --scenery_folder " + scenery_path + " --lat " + tile[2][0] + " --lon " + tile[2][1])
     }
-    for (tile_n in detailed_tiles){
+    for (tile_n in detailed_tiles) {
         tile = tiles[tile_n]
         cmds.push("python creator.py --scenery_folder " + scenery_path + " --lat " + tile[2][0] + " --lon " + tile[2][1] + " --cols 2")
     }
@@ -85,7 +89,7 @@ function generate_codes(){
     text = "python creator.py --scenery_folder " + scenery_path + " --lat " + lat + " --lon " + lon
 }
 
-function to_clipboard(){
+function to_clipboard() {
     var copyText = document.getElementById("output-text");
     copyText.select();
     copyText.setSelectionRange(0, 99999);
